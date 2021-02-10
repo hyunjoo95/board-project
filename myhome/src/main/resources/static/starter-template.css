@@ -1,0 +1,13 @@
+body {
+    padding-top: 5rem;
+}
+.text-right{
+    text-align: right;
+}
+#login_div{
+    width:300px;
+    margin: auto;
+}
+.float-right{
+    float: right;
+}
