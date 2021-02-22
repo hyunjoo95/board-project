@@ -8,14 +8,20 @@
 
 <main class="container">
     <div th:id="login_div">
-        <form>
-            <div class="mb-3">
-                <label for="useremail" class="form-label">이메일</label>
-                <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp">
+        <form th:action="@{/user/login}" method="post">
+            <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                비밀번호가 틀렸습니다.
+            </div>
+            <div class="alert alert-primary" role="alert" th:if="${param.logout}">
+                로그아웃 되었습니다.
             </div>
             <div class="mb-3">
-                <label for="userpassword" class="form-label">비밀번호</label>
-                <input type="password" class="form-control" id="userpassword">
+                <label for="username" class="form-label">이름</label>
+                <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="password">
             </div>
             <!--
             <div class="mb-3 form-check">

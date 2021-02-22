@@ -11,20 +11,22 @@
         <form th:action="@{/user/join}" th:object="${user}" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">이름</label>
-                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" th:field="*{username}">
+                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" name="username">
             </div>
             <div class="mb-3">
                 <label for="useremail" class="form-label">이메일</label>
-                <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" th:field="*{useremail}">
+                <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" name="useremail">
             </div>
             <div class="mb-3">
-                <label for="userpassword" class="form-label">비밀번호</label>
-                <input type="password" class="form-control" id="userpassword" th:field="*{userpassword}">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="password">
             </div>
+            <!--
             <div class="mb-3">
                 <label for="userpasswordcheck" class="form-label">비밀번호 확인</label>
                 <input type="password" class="form-control" id="userpasswordcheck">
             </div>
+            -->
             <button type="submit" class="btn btn-primary">가입</button>
         </form>
     </div>

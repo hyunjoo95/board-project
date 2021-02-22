@@ -5,6 +5,7 @@ import com.example.myhome.model.Board;
 import com.example.myhome.model.User;
 import com.example.myhome.repository.BoardRepository;
 import com.example.myhome.repository.UserRepository;
+import com.example.myhome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,22 +20,26 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    @GetMapping("login")
+    @GetMapping("/login")
     public String loginForm(){
         return "user/login";
     }
 
-    @GetMapping("join")
-    public String joinForm(Model model){
-        model.addAttribute("user", new User());
+    @PostMapping("/login")
+    public String login(){
+        return "redirect:/";
+    }
+
+    @GetMapping("/join")
+    public String joinForm(){
         return "user/join";
     }
 
-    @PostMapping("join")
-    public String join(@Valid User user){
-        userRepository.save(user);
-        return "user/login";
+    @PostMapping("/join")
+    public String join(User user){
+        userService.save(user);
+        return "redirect:/";
     }
 }
