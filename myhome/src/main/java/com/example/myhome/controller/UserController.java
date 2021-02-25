@@ -27,10 +27,6 @@ public class UserController {
         return "user/login";
     }
 
-    @PostMapping("/login")
-    public String login(){
-        return "redirect:/";
-    }
 
     @GetMapping("/join")
     public String joinForm(){

@@ -22,9 +22,9 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-        name = "user_role",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
+        name = "user_role", //조인테이블명
+        joinColumns = @JoinColumn(name = "user_id"), //외래키
+        inverseJoinColumns = @JoinColumn(name = "role_id") //반대 엔티티의 외래키
         )
 
 

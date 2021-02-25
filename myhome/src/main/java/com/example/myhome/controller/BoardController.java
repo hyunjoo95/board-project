@@ -3,6 +3,7 @@ package com.example.myhome.controller;
 
 import com.example.myhome.model.Board;
 import com.example.myhome.repository.BoardRepository;
+import com.example.myhome.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class BoardController {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private BoardValidator boardValidator;
 
     // 리스트 출력
     @GetMapping("/list")
@@ -45,7 +49,12 @@ public class BoardController {
         return "board/form";
     }
     @PostMapping("/form/save")
-    public String saveForm(@Valid Board board, BindingResult result){
+    public String saveForm(@Valid Board board, BindingResult bindingResult){
+        boardValidator.validate(board, bindingResult);
+        if(bindingResult.hasErrors()){
+            return "board/form";
+        }
+
         boardRepository.save(board);
         return "redirect:/board/list";
     }
