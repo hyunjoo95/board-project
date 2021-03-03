@@ -9,6 +9,18 @@
 <div class="container">
     <h2>게시판</h2>
     <div>총 건수 : <span th:text="${boards.totalElements}"></span></div>
+    <form class="row g-3 align-items-center d-flex justify-content-end" method="GET" th:action="@{/board/list}">
+        <div class="col-auto">
+            <label for="searchText" class="col-form-label">검색</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="searchText" class="form-control" name="searchText" th:value="${param.searchText}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light">검색</button>
+        </div>
+
+    </form>
     <table class="table">
         <thead>
         <tr>
@@ -28,13 +40,13 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item" th:classappend="${1 == boards.pageable.pageNumber+1} ? 'disabled' ">
-                <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber-1})}">Previous</a>
+                <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber-1},searchText=${param.searchText})}">Previous</a>
             </li>
             <li class="page-item" th:classappend="${i == boards.pageable.pageNumber+1} ? 'disabled' " th:each="i : ${#numbers.sequence(startPage,endPage)}">
-                <a class="page-link" href="#" th:text="${i}" th:href="@{/board/list(page=${i-1})}">1</a>
+                <a class="page-link" href="#" th:text="${i}" th:href="@{/board/list(page=${i-1},searchText=${param.searchText})}">1</a>
             </li>
             <li class="page-item" th:classappend="${boards.totalPages == boards.pageable.pageNumber+1} ? 'disabled' ">
-                <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber+1})}">Next</a>
+                <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber+1},searchText=${param.searchText})}">Next</a>
             </li>
         </ul>
     </nav>
