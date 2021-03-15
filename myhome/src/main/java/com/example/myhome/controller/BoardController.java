@@ -3,12 +3,14 @@ package com.example.myhome.controller;
 
 import com.example.myhome.model.Board;
 import com.example.myhome.repository.BoardRepository;
+import com.example.myhome.service.BoardService;
 import com.example.myhome.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +31,9 @@ public class BoardController {
 
     @Autowired
     private BoardValidator boardValidator;
+
+    @Autowired
+    private BoardService boardService;
 
     // 리스트 출력
     @GetMapping("/list")
@@ -60,14 +65,15 @@ public class BoardController {
 
         return "board/form";
     }
-    @PostMapping("/form/save")
-    public String saveForm(@Valid Board board, BindingResult bindingResult){
+    @PostMapping("/form")
+    public String postForm(@Valid Board board, BindingResult bindingResult, Authentication authentication){
         boardValidator.validate(board, bindingResult);
         if(bindingResult.hasErrors()){
             return "board/form";
         }
+        String username = authentication.getName();
+        boardService.save(username,board);
 
-        boardRepository.save(board);
         return "redirect:/board/list";
     }
 
