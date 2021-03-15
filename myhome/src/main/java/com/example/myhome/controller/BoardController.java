@@ -82,4 +82,5 @@ public class BoardController {
         boardRepository.deleteById(id);
         return "redirect:/board/list";
     }
+
 }
