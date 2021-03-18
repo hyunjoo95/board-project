@@ -2,7 +2,9 @@ package com.example.myhome.controller;
 
 
 import com.example.myhome.model.Board;
+import com.example.myhome.model.Comment;
 import com.example.myhome.repository.BoardRepository;
+import com.example.myhome.repository.CommentRepository;
 import com.example.myhome.service.BoardService;
 import com.example.myhome.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,6 +27,9 @@ public class BoardController {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Autowired
     private BoardValidator boardValidator;
@@ -60,7 +62,9 @@ public class BoardController {
         }else{
             // 수정 시 내용 가져오기
             Board board = boardRepository.findById(id).orElse(null);
+            List comment = commentRepository.findByBoard_Id(id);
             model.addAttribute("board", board);
+            model.addAttribute("comments", comment);
         }
 
         return "board/form";
