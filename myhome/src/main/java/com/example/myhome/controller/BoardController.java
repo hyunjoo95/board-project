@@ -69,6 +69,20 @@ public class BoardController {
 
         return "board/form";
     }
+
+    // 게시글 보여주기
+    @GetMapping("/view")
+    public String view(Model model, @RequestParam(required = false) Long id){
+
+        // 수정 시 내용 가져오기
+        Board board = boardRepository.findById(id).orElse(null);
+        List comment = commentRepository.findByBoard_Id(id);
+        model.addAttribute("board", board);
+        model.addAttribute("comments", comment);
+
+        return "board/view";
+    }
+
     @PostMapping("/form")
     public String postForm(@Valid Board board, BindingResult bindingResult, Authentication authentication){
         boardValidator.validate(board, bindingResult);
@@ -84,6 +98,7 @@ public class BoardController {
     @PostMapping("/form/delete")
     public String deleteForm(@RequestParam(required = true) Long id){
         boardRepository.deleteById(id);
+
         return "redirect:/board/list";
     }
 
